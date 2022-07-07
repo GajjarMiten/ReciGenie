@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "476877876609",
+    "firebase_url": "https://myportfolio2692.firebaseio.com",
+    "project_id": "myportfolio2692",
+    "storage_bucket": "myportfolio2692.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476877876609:android:de40eed9fdd132019d8c80",
+        "android_client_info": {
+          "package_name": "com.example.recigennie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476877876609-0gu5mvnta9uebdb04r0hld5ideu0bqb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXQVBi5p-OAmLjaJJwTAZN1CJE-7j7Rgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476877876609-0gu5mvnta9uebdb04r0hld5ideu0bqb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,3 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -19,12 +17,50 @@ class AuthForm extends StatefulWidget {
   _AuthFormState createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm> {
+class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   var _isLogin = true;
   var _userEmail = '';
   var _userName = '';
   var _userPassword = '';
+
+  late AnimationController anim;
+  late AnimationController anim2;
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: anim,
+    curve: Curves.easeIn,
+  );
+
+  late final Animation<double> _animation2 = CurvedAnimation(
+    parent: anim2,
+    curve: Curves.easeIn,
+  );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    anim = AnimationController(
+        duration: Duration(milliseconds: 600),
+        vsync: this,
+        lowerBound: 0,
+        upperBound: 1)
+      ..animateTo(1);
+    anim2 = AnimationController(
+        duration: Duration(milliseconds: 600),
+        vsync: this,
+        lowerBound: 0,
+        upperBound: 1);
+    Future.delayed(Duration(milliseconds: 200), () => anim2.animateTo(1));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    anim.dispose();
+    anim2.dispose();
+    super.dispose();
+  }
 
   void _trySubmit() {
     final isValid = _formKey.currentState?.validate();
@@ -50,70 +86,37 @@ class _AuthFormState extends State<AuthForm> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // Stack(
-              //   children: <Widget>[
-              //     Container(
-              //       padding: const EdgeInsets.fromLTRB(15.0, 50.0, 0.0, 0.0),
-              //       child: const Text('Hi',
-              //           style: TextStyle(
-              //               color: Color.fromRGBO(253, 111, 150, 1),
-              //               fontSize: 80.0,
-              //               fontFamily: "Raleway",
-              //               fontWeight: FontWeight.bold)),
-              //     ),
-              //     Container(
-              //       padding: const EdgeInsets.fromLTRB(15.0, 125.0, 0.0, 0.0),
-              //       child: DefaultTextStyle(
-              //         style: const TextStyle(
-              //           fontFamily: "Raleway",
-              //           fontSize: 80.0,
-              //           fontWeight: FontWeight.bold,
-              //           color: Color.fromRGBO(111, 105, 172, 1),
-              //         ),
-              //         child: AnimatedTextKit(
-              //           animatedTexts: [
-              //             WavyAnimatedText("There"),
-              //             WavyAnimatedText('Again'),
-              //           ],
-              //           isRepeatingAnimation: false,
-              //         ),
-              //       ),
-              //     ),
-              //     Container(
-              //       padding: const EdgeInsets.fromLTRB(235.0, 125.0, 0.0, 0.0),
-              //       child: const Text('.',
-              //           style: TextStyle(
-              //               fontSize: 80.0,
-              //               fontWeight: FontWeight.bold,
-              //               color: Color.fromRGBO(111, 105, 172, 1))),
-              //     )
-              //   ],
-              // ),
               Center(
                 child: Column(
                   children: [
                     SizedBox(
                       height: 100,
                     ),
-                    Text(
-                      _isLogin ? "Hello Again!" : "Welcome!",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.grey[800],
-                        fontWeight: FontWeight.bold,
+                    FadeTransition(
+                      opacity: _animation,
+                      child: Text(
+                        _isLogin ? "Hello Again!" : "Welcome!",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      _isLogin
-                          ? "Welcome Back you've \n been missed!"
-                          : "Lets Get you all Set Up.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 22,
+                    FadeTransition(
+                      opacity: _animation2,
+                      child: Text(
+                        _isLogin
+                            ? "Welcome Back you've \n been missed!"
+                            : "Lets Get you all Set Up.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 22,
+                        ),
                       ),
                     ),
                   ],
@@ -266,6 +269,13 @@ class _AuthFormState extends State<AuthForm> {
                                   onPressed: () {
                                     setState(() {
                                       _isLogin = !_isLogin;
+                                      anim.reset();
+                                      anim.animateTo(1);
+                                      anim2.reset();
+                                      Future.delayed(
+                                          Duration(milliseconds: 200), () {
+                                        anim2.animateTo(1);
+                                      });
                                     });
                                   },
                                   child: Center(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -26,11 +27,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
     try {
       await _speechToText.initialize().then((value) {
         setState(() {
+          print("Speech to text initialized");
           print(value);
           speechEnabled = value;
         });
       });
     } catch (e) {
+      print("------------------");
       print(e);
     }
   }
@@ -39,6 +42,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   void initState() {
     super.initState();
     Permission.microphone.request().then((value) {
+      print(value.isGranted);
       if (value.isGranted) {
         _initSpeech();
       }
@@ -122,7 +126,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
         backgroundColor: Color(0xffeceff9),
       ),
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: <Widget>[
             SizedBox(
               height: 100,
@@ -200,7 +204,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       ],
                     ),
             ),
-            Spacer(),
+            
           ],
         ),
       ),

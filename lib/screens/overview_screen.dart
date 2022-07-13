@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -19,7 +20,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   String _lastWords = '';
   bool isListening = false;
 
-  List<String> words = ["Tap", "on", "mic", "to", "start", "speaking"];
+  List<String> words = [];
 
   void _initSpeech() async {
     try {
@@ -124,7 +125,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: 150,
+              height: 100,
             ),
             Column(
               mainAxisSize: MainAxisSize.max,
@@ -160,13 +161,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   height: 30,
-                // ),
-                // Text(
-                //   isListening ? "Listening" : "Not Listening",
-                //   style: TextStyle(fontSize: 20, color: Colors.white),
-                // ),
               ],
             ),
             Container(
@@ -176,26 +170,35 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 minHeight: 100,
               ),
               padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
-              child: Wrap(
-                alignment: WrapAlignment.start,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                direction: Axis.horizontal,
-                children: words
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Chip(
-                          label: Text(
-                            e + "\t",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
+              child: words.length > 0
+                  ? Wrap(
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      direction: Axis.horizontal,
+                      children: words
+                          .map(
+                            (e) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Chip(
+                                label: Text(
+                                  e + "\t",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                            ),
+                          )
+                          .toList())
+                  : Column(
+                      children: [
+                        Text("Click in the Mic to start Speaking"),
+                        Lottie.network(
+                            "https://assets4.lottiefiles.com/packages/lf20_rjcm4jcc.json",
+                            height: 300)
+                      ],
+                    ),
             ),
             Spacer(),
           ],

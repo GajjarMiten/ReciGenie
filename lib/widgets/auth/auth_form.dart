@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -41,136 +43,187 @@ class _AuthFormState extends State<AuthForm> {
       reverse: true,
       padding: const EdgeInsets.only(
         top: 35,
-        left: 25,
+        // left: 25,
       ),
       child: Column(
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15.0, 50.0, 0.0, 0.0),
-                    child: const Text('Hi',
-                        style: TextStyle(
-                            color: Color.fromRGBO(253, 111, 150, 1),
-                            fontSize: 80.0,
-                            fontFamily: "Raleway",
-                            fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(15.0, 125.0, 0.0, 0.0),
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontFamily: "Raleway",
-                        fontSize: 80.0,
+              // Stack(
+              //   children: <Widget>[
+              //     Container(
+              //       padding: const EdgeInsets.fromLTRB(15.0, 50.0, 0.0, 0.0),
+              //       child: const Text('Hi',
+              //           style: TextStyle(
+              //               color: Color.fromRGBO(253, 111, 150, 1),
+              //               fontSize: 80.0,
+              //               fontFamily: "Raleway",
+              //               fontWeight: FontWeight.bold)),
+              //     ),
+              //     Container(
+              //       padding: const EdgeInsets.fromLTRB(15.0, 125.0, 0.0, 0.0),
+              //       child: DefaultTextStyle(
+              //         style: const TextStyle(
+              //           fontFamily: "Raleway",
+              //           fontSize: 80.0,
+              //           fontWeight: FontWeight.bold,
+              //           color: Color.fromRGBO(111, 105, 172, 1),
+              //         ),
+              //         child: AnimatedTextKit(
+              //           animatedTexts: [
+              //             WavyAnimatedText("There"),
+              //             WavyAnimatedText('Again'),
+              //           ],
+              //           isRepeatingAnimation: false,
+              //         ),
+              //       ),
+              //     ),
+              //     Container(
+              //       padding: const EdgeInsets.fromLTRB(235.0, 125.0, 0.0, 0.0),
+              //       child: const Text('.',
+              //           style: TextStyle(
+              //               fontSize: 80.0,
+              //               fontWeight: FontWeight.bold,
+              //               color: Color.fromRGBO(111, 105, 172, 1))),
+              //     )
+              //   ],
+              // ),
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Text(
+                      _isLogin ? "Hello Again!" : "Welcome!",
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.grey[800],
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(111, 105, 172, 1),
-                      ),
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          WavyAnimatedText("There"),
-                          WavyAnimatedText('Again'),
-                        ],
-                        isRepeatingAnimation: false,
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(235.0, 125.0, 0.0, 0.0),
-                    child: const Text('.',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromRGBO(111, 105, 172, 1))),
-                  )
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      _isLogin
+                          ? "Welcome Back you've \n been missed!"
+                          : "Lets Get you all Set Up.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 22,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Form(
                 key: _formKey,
                 child: SingleChildScrollView(
                   child: Container(
                       padding: const EdgeInsets.only(
-                          top: 54.0, left: 20.0, right: 30.0),
+                          top: 54.0, left: 30.0, right: 30.0),
                       child: Column(
                         children: <Widget>[
-                          TextFormField(
-                            key: const ValueKey('email'),
-                            decoration: const InputDecoration(
-                                labelText: 'EMAIL',
-                                labelStyle: TextStyle(
-                                    fontFamily: 'RobotoCondensed',
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green),
-                                )),
-                            keyboardType: TextInputType.emailAddress,
-                            autocorrect: false,
-                            textCapitalization: TextCapitalization.none,
-                            enableSuggestions: false,
-                            validator: (value) {
-                              if (value!.isEmpty || !value.contains('@')) {
-                                return 'Please enter a valid email address';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _userEmail = value!;
-                            },
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: TextFormField(
+                                key: const ValueKey('email'),
+                                decoration: const InputDecoration(
+                                  labelText: 'Enter Email',
+                                  border: InputBorder.none,
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                autocorrect: false,
+                                textCapitalization: TextCapitalization.none,
+                                enableSuggestions: false,
+                                validator: (value) {
+                                  if (value!.isEmpty || !value.contains('@')) {
+                                    return 'Please enter a valid email address';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _userEmail = value!;
+                                },
+                              ),
+                            ),
                           ),
                           if (!_isLogin) const SizedBox(height: 20.0),
                           if (!_isLogin)
-                            TextFormField(
-                              key: const ValueKey('username'),
-                              decoration: const InputDecoration(
-                                  labelText: 'USERNAME',
-                                  labelStyle: TextStyle(
-                                      fontFamily: 'RobotoCondensed',
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.green))),
-                              autocorrect: true,
-                              textCapitalization: TextCapitalization.words,
-                              enableSuggestions: false,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter a username';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                _userName = value!;
-                              },
-                              // ignore: missing_return
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: TextFormField(
+                                  key: const ValueKey('username'),
+                                  decoration: const InputDecoration(
+                                    labelText: 'Username',
+                                    border: InputBorder.none,
+                                    labelStyle: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                  autocorrect: true,
+                                  textCapitalization: TextCapitalization.words,
+                                  enableSuggestions: false,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter a username';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (value) {
+                                    _userName = value!;
+                                  },
+                                  // ignore: missing_return
+                                ),
+                              ),
                             ),
                           const SizedBox(height: 20.0),
-                          TextFormField(
-                            key: const ValueKey('password'),
-                            decoration: const InputDecoration(
-                              labelText: 'PASSWORD',
-                              labelStyle: TextStyle(
-                                  fontFamily: 'RobotoCondensed',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.green)),
-                            ),
-                            obscureText: true,
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: TextFormField(
+                                key: const ValueKey('password'),
+                                decoration: const InputDecoration(
+                                  labelText: 'Password',
+                                  border: InputBorder.none,
+                                  labelStyle: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
+                                obscureText: true,
 
-                            // ignore: missing_return
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 7) {
-                                return 'Please enter a long password';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _userPassword = value!;
-                            },
+                                // ignore: missing_return
+                                validator: (value) {
+                                  if (value!.isEmpty || value.length < 7) {
+                                    return 'Please enter a long password';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _userPassword = value!;
+                                },
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 35,
@@ -182,8 +235,8 @@ class _AuthFormState extends State<AuthForm> {
                               height: 57.0,
                               child: Material(
                                 borderRadius: BorderRadius.circular(20.0),
-                                shadowColor: Colors.black,
-                                color: const Color.fromRGBO(111, 105, 172, 1),
+                                shadowColor: Color.fromARGB(134, 253, 106, 104),
+                                color: const Color(0xfffd6b68),
                                 elevation: 10.0,
                                 child: TextButton(
                                   onPressed: _trySubmit,

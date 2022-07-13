@@ -73,56 +73,58 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (_lastWords.isNotEmpty) {
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                builder: (ctx) {
+                  return RecipeScreen(
+                    query: words.join(" "),
+                  );
+                },
+              ),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: Text("Please speak something"),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          }
+        },
+        label: Text("Search Recipe"),
+        icon: Icon(Icons.search),
+      ),
       appBar: AppBar(
-        title: Text('Food Mama'),
-        leading: Icon(Icons.menu),
+        title: Text(
+          'Food Mama',
+          style: TextStyle(color: Colors.black),
+        ),
+        leading: Icon(
+          Icons.menu,
+          color: Colors.black,
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color(0xffeceff9),
       ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.all(10),
-              width: MediaQuery.of(context).size.width,
-              constraints: BoxConstraints(
-                minHeight: 100,
-              ),
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                  color: Color(0xffD3CEDF),
-                  border: Border.all(
-                    width: 2,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  borderRadius: BorderRadius.circular(8)),
-              padding: EdgeInsets.all(16),
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                direction: Axis.horizontal,
-                children: words
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Chip(
-                          label: Text(
-                            e + "\t",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
             SizedBox(
-              height: 100,
+              height: 150,
             ),
             Column(
               mainAxisSize: MainAxisSize.max,
@@ -136,67 +138,64 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     height: 200,
                     width: 200,
                     decoration: BoxDecoration(
-                        color: isListening
-                            ? Theme.of(context).colorScheme.secondary
-                            : null,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.secondary,
-                          width: 2,
-                        )),
+                      color: isListening
+                          ? Color.fromARGB(255, 255, 67, 53)
+                          : Color.fromARGB(129, 184, 184, 184),
+                      boxShadow: [
+                        BoxShadow(
+                          color: isListening
+                              ? Colors.pink.withOpacity(0.2)
+                              : Colors.transparent,
+                          spreadRadius: 8,
+                          blurRadius: 20,
+                          offset: Offset(0, 3),
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                    ),
                     child: Icon(
                       !isListening ? Icons.mic_off : Icons.mic,
-                      color: !isListening
-                          ? Theme.of(context).colorScheme.secondary
-                          : Colors.white,
+                      color: Colors.white,
                       size: 50,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                Text(
-                  isListening ? "Listening" : "Not Listening",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (_lastWords.isNotEmpty) {
-                      Navigator.of(context).push(
-                        CupertinoPageRoute(
-                          builder: (ctx) {
-                            return RecipeScreen(
-                              query: words.join(" "),
-                            );
-                          },
-                        ),
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          return AlertDialog(
-                            title: Text("Please speak something"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text("OK"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text("Search Recipes"),
-                ),
+                // SizedBox(
+                //   height: 30,
+                // ),
+                // Text(
+                //   isListening ? "Listening" : "Not Listening",
+                //   style: TextStyle(fontSize: 20, color: Colors.white),
+                // ),
               ],
+            ),
+            Container(
+              margin: const EdgeInsets.all(20),
+              width: MediaQuery.of(context).size.width,
+              constraints: BoxConstraints(
+                minHeight: 100,
+              ),
+              padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
+              child: Wrap(
+                alignment: WrapAlignment.start,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                direction: Axis.horizontal,
+                children: words
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Chip(
+                          label: Text(
+                            e + "\t",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
             Spacer(),
           ],

@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Auth Application',
         theme: ThemeData(
-            scaffoldBackgroundColor: Color(0xffD3CEDF),
+            scaffoldBackgroundColor: Color(0xffeceff9),
             primarySwatch: MaterialColor(
                 Color(0xff937DC2).value, getSwatch(Color(0xff937DC2))),
             backgroundColor: Colors.white,
